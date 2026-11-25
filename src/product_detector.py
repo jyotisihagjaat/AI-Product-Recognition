@@ -1,36 +1,19 @@
+# Legacy V1 (YOLO-World). The default app is V2: collect_data.py -> train_model.py -> recognize.py.
 import sys
 import cv2
 from ultralytics import YOLOWorld
+from labels import PRODUCTS, PROMPTS
+from config import CAMERA_INDEX
 
 # ---------------------------------------------------------
 # AI PRODUCT RECOGNITION SYSTEM
 # ---------------------------------------------------------
 
 MODEL_NAME = "yolov8s-worldv2.pt"
-CAMERA_INDEX = 0
 CONFIDENCE_THRESHOLD = 0.20
 IMAGE_SIZE = 640
 
-# Prompts are written to help the open-vocabulary model
-# recognize the requested everyday objects.
-PRODUCTS = [
-    ("Phone", "smartphone"),
-    ("Charger", "phone charger"),
-    ("Bangle", "bangle bracelet"),
-    ("Body Lotion", "body lotion bottle"),
-    ("Lipgloss", "lip gloss tube"),
-    ("Spoon", "spoon"),
-    ("Bournvita", "Bournvita drink container"),
-    ("Snacks", "packaged snack packet"),
-    ("Notebook", "notebook"),
-    ("Pen", "pen"),
-    ("Glue", "glue bottle"),
-    ("Cup", "drinking cup"),
-    ("Bottle", "water bottle"),
-]
-
-PROMPTS = [prompt for _, prompt in PRODUCTS]
-DISPLAY_NAMES = {index: name for index, (name, _) in enumerate(PRODUCTS)}
+DISPLAY_NAMES = {i: name for i, (_, name, _, _) in enumerate(PRODUCTS)}
 
 
 def main():
@@ -52,7 +35,7 @@ def main():
     camera = cv2.VideoCapture(CAMERA_INDEX)
     if not camera.isOpened():
         print("\nCould not open the webcam.")
-        print("Close other camera apps or try CAMERA_INDEX = 1 in this file.")
+        print("Close other camera apps or change CAMERA_INDEX in src/config.py.")
         input("\nPress Enter to close...")
         return
 

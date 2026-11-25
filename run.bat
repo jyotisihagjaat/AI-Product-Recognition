@@ -9,9 +9,9 @@ if not exist ".venv\Scripts\python.exe" (
     exit /b 1
 )
 
-".venv\Scripts\python.exe" src\product_detector.py
+".venv\Scripts\python.exe" src\recognize.py
 if errorlevel 1 (
     echo.
-    echo The app stopped because of an error. See the terminal message above.
+    echo The app stopped. See the message above.
     pause
 )
